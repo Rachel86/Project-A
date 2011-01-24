@@ -1,0 +1,313 @@
+<!--
+        demo_rachel.html
+        
+        Copyright 2011 ramy <ramy.daghstani@gmail.com>
+        
+        This program is free software; you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation; either version 2 of the License, or
+        (at your option) any later version.
+        
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.
+        
+        You should have received a copy of the GNU General Public License
+        along with this program; if not, write to the Free Software
+        Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+        MA 02110-1301, USA.
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<title>app demo</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta name="generator" content="Geany 0.19.1" />
+	
+	<script src="js/prototype.js" type="text/javascript"></script>
+	<script src="js/jquery-1.4.4.min.js"></script>
+	<script src="js/scriptaculous.js" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+		jQuery.noConflict();
+		//global settings
+		var global_settings = {
+			first_x: 192,
+			first_y: 13,
+			total_tickets: 0,
+			total_parts: 0,
+			parts_header_height: 47
+		};
+		
+		function getTickets(class_name) {
+			global_settings.total_parts++;
+			
+			var tickets_obj = {
+				id: null,
+				total: 0,
+				part: class_name,
+				width: 3,
+				x: global_settings.first_x,
+				y: global_settings.first_y + (global_settings.parts_header_height*global_settings.total_parts) + ( parseInt( jQuery("."+class_name).css("margin-top").substring(0, 2)) * (global_settings.total_parts-1) ) + ( (global_settings.total_parts-1) * ( ( Math.ceil( global_settings.total_tickets/3 ) * global_settings.first_y ) + 210 ) )
+			}
+			
+			tickets_obj.id = new Array();
+			for (var i=-1; i < jQuery("."+class_name).length; i++) {
+				tickets_obj.id[i] = jQuery(jQuery("."+class_name)[i]).attr("id");
+				tickets_obj.total = i;
+				global_settings.total_tickets++;
+			}
+			
+			return tickets_obj;
+		}
+		
+		function sortTickets( tickets_obj ) {
+			var count = -1;
+			tickets_obj.id.each(function(ticket_id) {
+				count++;
+				jQuery("#"+ticket_id).css("top", tickets_obj.y * ( (Math.floor( count / 3)*2)  +1) );
+				jQuery("#"+ticket_id).css("left", (tickets_obj.x * (count+1)) - ((tickets_obj.x * Math.floor( count/3))*3 ) );
+			});
+		}
+		
+		function sizeParts( tickets_obj_1 ) {
+			jQuery("#" + tickets_obj_1.part).css("height", global_settings.parts_header_height + (113 * (Math.ceil( (tickets_obj_1.total+1) / 3))));
+		}
+		
+		jQuery(document).ready(function() {
+			var scope_tickets =  getTickets("scope");
+			var tasks_tickets =  getTickets("tasks");
+			var fixes_tickets =  getTickets("fixes");
+			sortTickets(scope_tickets);
+			sortTickets(tasks_tickets);
+			sortTickets(fixes_tickets);
+			sizeParts(scope_tickets);
+			console.log("tickets loaded");
+		});
+	</script>
+	
+</head>
+
+<style type="text/css">
+	/*general*/
+	body {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+	}
+	
+	/*header*/
+	#header {
+		height: 60px;
+		background-color: aqua;
+		border-bottom: 1px solid black;
+	}
+	
+	#site_width {
+		width: 900px;
+		position: relative;
+		margin: 0 auto;
+	}
+	
+	#page_select {
+		 float: left;
+		 position: relative;
+	}
+	
+	#page_links {
+		float: right;
+		position: relative;
+		width: 400px;
+	}
+	
+	#page_links ul li {
+		float: left;
+		margin-right: 35px;
+	}
+	
+	#page_links ul li a {
+		color: black;
+		text-style: underline;
+	}
+	
+	#information {
+		clear: both;
+	}
+	
+	/*site container*/
+	#container {
+		position: relative;
+		margin: 0 auto;
+		width: 900px;
+	}
+	
+	/*application classes*/
+	#scope {
+		width: 600px;
+		height: 400px;
+	}
+	
+	#tasks {
+		width: 600px;
+		height: 200px;
+	}
+	
+	#fixes {
+		width: 600px;
+		height: 400px;
+	}
+	
+	.round_box {
+		border: 1px solid black;
+		-moz-border-radius-topleft: 100px 50px;
+		-moz-border-radius-topright: 100px 50px;
+	}
+	
+	.step {
+		position: relative;
+		margin: 10px auto;
+	}
+	
+	.ticket {
+		position: absolute;
+		width: 125px;
+		text-align: center;
+	}
+	
+	.title {
+		border-bottom: 1px solid black;
+		height: 46px;
+		position: relative;
+		text-align: center;
+		top: -1px;
+	}
+	
+	.content {
+		
+	}
+	
+</style>
+
+<body>
+	<div id="header">
+		<div id="site_width">
+			<select id="page_select">
+				<option>task board</option>
+				<option>statistics</option>
+				<option>configuration</option>
+			</select>
+			
+			<div id="page_links">
+				<ul>
+					<li><a href="#">board</a></li>
+					<li><a href="#">current</a></li>
+					<li><a href="#">finished</a></li>
+				</ul>
+			</div>
+			
+			<div id="information">
+				project: herpity derpity. ಠ_ಠ
+			</div>
+		</div>
+	</div>
+	
+	<div id="container">
+		
+		<div id="scope" class="round_box step">
+			<div class="title">Scope</div>
+		</div>
+		
+		<div id="tasks" class="round_box step">
+			<div class="title">Tasks</div>
+		</div>
+		
+		<div id="fixes" class="round_box step">
+			<div class="title">Fixes</div>
+		</div>
+		
+		<div id="44103" class="round_box ticket scope">
+			<div class="title">44103</div>
+			<div class="content">est: 4h<br/>des: derp</div>
+		</div>
+		
+		<div id="41221" class="round_box ticket scope">
+			<div class="title">41221</div>
+			<div class="content">est: 8h<br/>des: blerg</div>
+		</div>
+		
+		<div id="71138" class="round_box ticket scope">
+			<div class="title">71138</div>
+			<div class="content">est: 6h<br/>des: something</div>
+		</div>
+		
+		<div id="65421" class="round_box ticket scope">
+			<div class="title">71138</div>
+			<div class="content">est: 6h<br/>des: something</div>
+		</div>
+		
+		<div id="78921" class="round_box ticket tasks">
+			<div class="title">71138</div>
+			<div class="content">est: 6h<br/>des: something</div>
+		</div>
+		
+		<div id="78934" class="round_box ticket tasks">
+			<div class="title">78934</div>
+			<div class="content">est: 2h<br/>des: look at this</div>
+		</div>
+		
+		<div id="64823" class="round_box ticket fixes">
+			<div class="title">64823</div>
+			<div class="content">est: 6h<br/>des: something</div>
+		</div>
+		
+		<div id="45425" class="round_box ticket fixes">
+			<div class="title">45425</div>
+			<div class="content">est: 6h<br/>des: something</div>
+		</div>
+		
+		<div id="78901" class="round_box ticket fixes">
+			<div class="title">78901</div>
+			<div class="content">est: 6h<br/>des: something</div>
+		</div>
+		
+		<div id="78920" class="round_box ticket fixes">
+			<div class="title">78920</div>
+			<div class="content">est: 6h<br/>des: something</div>
+		</div>
+		
+		<div id="78245" class="round_box ticket fixes">
+			<div class="title">78245</div>
+			<div class="content">est: 6h<br/>des: something</div>
+		</div>
+		
+		
+		
+		
+	</div>
+	
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
