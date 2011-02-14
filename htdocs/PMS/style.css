@@ -1,0 +1,117 @@
+
+body {
+/*	splendid bacon
+	min-width		: 960px;
+	background		: transparent;
+	border			: 0px;
+	font-size		: 100%;
+	margin			: 0px;
+	outline			: 0px;
+	padding			: 0px;
+	vertical-align	: baseline;*/
+	background-color: #333;
+	font			: normal normal normal 13px/1.5 '', Arial, 'Liberation Sans', FreeSans, sans-serif;
+	margin			: 0;
+	padding			: 0;
+}
+
+#wrapper {
+	width			: 960px;
+	background-color: #ff0000;
+	margin			: 0 auto;
+	border-radius	: 8px;
+}
+
+
+#header {
+	width			: 960px;
+	height			: 55px;
+	margin			: 0 auto;
+	margin-bottom	: 25px;
+}
+
+#header h2 {
+	padding: 10px;
+}
+
+#nav {
+	background-color: #333;
+	width			: 960px;
+	height 			: 25px;
+}
+
+#nav a {
+	display			: inline;
+	text-decoration	: none;
+	margin-left		: 10px;
+	color			: #fff;
+	font-size		: 14px;
+	margin-top		: 10px;
+}
+
+#nav a.account:hover,
+#nav a.logout:hover,
+#nav a.about:hover{
+	color: #ffff00;
+}
+
+#nav a.logout {
+	font-weight: bold;
+}
+
+#nav a.about {
+	float		: right;
+	margin-right: 10px;
+	margin-top	: 2px;
+}
+
+#nav a.button {
+	display			: inline;
+	padding			: 10px;
+	text-decoration	: none;
+	background-color: #333;
+	border			: 2px solid #1f1f21;
+	border-radius	: 8px;
+	color			: #fff;
+	margin-left		: 10px;
+	font-size		: 16px;
+}
+
+#nav a.button:hover {
+	border				: 2px solid #ccc;
+	-moz-box-shadow		: 1px 1px 5px #999;
+	-webkit-box-shadow	: 1px 1px 5px #999;
+	box-shadow			: 1px 1px 5px #999; 
+	height				: 80px;
+}
+
+#content {
+	width	: 675px;
+	float	: left;
+	padding	: 10px;
+}
+
+#sidebar {
+	width			: 200px;
+	float			: right;
+	margin-bottom	: 25px;
+}
+
+#sidebar a {
+	text-decoration: none;
+}
+
+#sidebar li {
+	list-style: none;
+}
+
+#footer {
+	clear			:both;
+	width			: 960px;
+	height			: 135px;
+	border-top		: 8px solid #333;
+}
+
+#footer p {
+	padding: 10px;
+}
